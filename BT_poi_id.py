@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import numpy as np
 
+
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
@@ -31,7 +32,7 @@ from sklearn.grid_search import GridSearchCV
 ### The first feature must be "poi".
 features_list = ['poi', 'total_stock_value', 'from_poi_to_this_person_frac',
                  'from_this_person_to_poi_frac', 'bonus', 'salary','shared_receipt_with_poi',
-                'restricted_stock_deferred']
+                'restricted_stock_deferred',]
 
 
 ### Load the dictionary containing the dataset
@@ -82,14 +83,18 @@ test_classifier(clf, my_dataset, features_list)
 ### Dump your classifier, dataset, and features_list so 
 ### anyone can run/check your results.
 
-dump_classifier_and_data(clf, my_dataset, features_list)
+### Adaboost
+clf = AdaBoostClassifier()
+
+test_classifier(clf, my_dataset, features_list)
 
 
 ### Decision Tree
+##ran GridCV tuned paramters:
+#clf = DecisionTreeClassifier(min_samples_split = 10, criterion = 'gini', max_leaf_nodes = 5, min_samples_leaf = 5,)
+
 clf = DecisionTreeClassifier(criterion = 'entropy')
-                          #   max_leaf_nodes= None, max_depth= 2, min_samples_leaf= 5)
-    #criterion = 'entropy',min_samples_split = 2
-    
+
 
 
 # Utility function to report best scores
@@ -149,13 +154,6 @@ test_classifier(clf, my_dataset, features_list)
 dump_classifier_and_data(clf, my_dataset, features_list)
 
 
-
-### Adaboost
-clf = AdaBoostClassifier()
-
-test_classifier(clf, my_dataset, features_list)
-
-dump_classifier_and_data(clf, my_dataset, features_list)
 
 '''### Decision tree with default parameters
 clf = DecisionTreeClassifier()
