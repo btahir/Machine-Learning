@@ -24,6 +24,8 @@ from __future__ import print_function
 from time import time
 from operator import itemgetter
 from sklearn.grid_search import GridSearchCV
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import SelectPercentile, f_classif
 
 ### Task 1: Select what features you'll use.
 
@@ -31,7 +33,7 @@ from sklearn.grid_search import GridSearchCV
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
 features_list = ['poi', 'total_stock_value', 'from_poi_to_this_person_frac',
-                 'from_this_person_to_poi_frac', 'bonus', 'salary','shared_receipt_with_poi',
+                 'from_this_person_to_poi_frac', 'bonus', 'salary',
                 'restricted_stock_deferred',]
 
 
@@ -93,7 +95,7 @@ test_classifier(clf, my_dataset, features_list)
 ##ran GridCV tuned paramters:
 #clf = DecisionTreeClassifier(min_samples_split = 10, criterion = 'gini', max_leaf_nodes = 5, min_samples_leaf = 5,)
 
-clf = DecisionTreeClassifier(criterion = 'entropy')
+clf = DecisionTreeClassifier(criterion = 'entropy',min_samples_leaf = 10)
 
 
 
@@ -125,7 +127,7 @@ def run_gridsearch(X, y, clf, param_grid, cv=5):
     """
     grid_search = GridSearchCV(clf,
                                param_grid=param_grid,
-                               cv=cv)
+                               cv=cv,scoring = 'recall')
     start = time()
     grid_search.fit(X, y)
 

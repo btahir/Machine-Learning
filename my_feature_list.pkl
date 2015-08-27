@@ -11,8 +11,6 @@ aS'bonus'
 p5
 aS'salary'
 p6
-aS'shared_receipt_with_poi'
-p7
 aS'restricted_stock_deferred'
-p8
+p7
 a.
